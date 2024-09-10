@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        .profile-img {
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            background-color: #333;
+            color: #fff;
+            font-size: 18px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, transform 0.5s ease;
+            animation: float 3s infinite;
+        }
+        .social-links a:hover {
+            background-color: #d0ff00;
+        }
+        .social-links .github {
+            color: #fff;
+            background-color: #333;
+        }
+        .social-links .linkedin {
+            color: #0A66C2;
+        }
+        .header-text {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+        .typing-text {
+            font-size: 24px;
+            display: inline-block;
+            border-right: 2px solid #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            margin-bottom: 10px;
+            padding-right: 10px;
+            color: #ffffff;
+        }
+        .info-text {
+            font-size: 28px;
+            margin: 20px 0;
+            color: #ffffff;
+        }
+        .social-media-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 30px 0;
+            color: #ffffff;
+        }
+        .social-media-title i {
+            margin-right: 10px;
+        }
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #ffffff;
+            transition: color 0.3s ease;
+        }
+        .dark-mode {
+            color: #ffffff;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="header-text">I'm Abram Hany</h1>
+        <img src="IMG_20240910_224131_566.jpg" alt="My Picture" class="profile-img">
+        <p id="dynamicText" class="typing-text"></p>
+        <div class="info-text">
+            <span class="header-text">Hello, I am Abram</span>, a professional website developer. I love programming and I always love to develop myself. If you need help with anything, do not hesitate to contact me.
+        </div>
+        <div class="social-media-title">
+            <i class="fas fa-users"></i> Social Media
+        </div>
+        <div class="social-links">
+            <a href="https://www.instagram.com/abramhaany" target="_blank"><i class="fab fa-instagram-square fa-2x" style="color: #E1306C;"></i></a>
+            <a href="https://www.facebook.com/abramhaany?mibextid=2JQ9oc" target="_blank"><i class="fab fa-facebook-square fa-2x" style="color: #3B5998;"></i></a>
+            <a href="https://wa.me/+201204625935" target="_blank"><i class="fab fa-whatsapp-square fa-2x" style="color: #25D366;"></i></a>
+            <a href="https://github.com/abramhaany" target="_blank" class="github"><i class="fab fa-github-square fa-2x"></i></a>
+            <a href="https://www.linkedin.com/in/abramhaany" target="_blank" class="linkedin"><i class="fab fa-linkedin fa-2x"></i></a>
+        </div>
+        <div class="theme-toggle">
+            <i class="fas fa-moon" id="themeIcon"></i>
+        </div>
+    </div>
+
+    <script>
+        const texts = ["I Love Coding", "I CODE Cool Websites", "I'm Developer"];
+        const typingSpeed = 100;
+        const deleteSpeed = 50;
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const dynamicTextElement = document.getElementById("dynamicText");
+
+        function typeEffect() {
+            const currentText = texts[textIndex];
+            if (!isDeleting) {
+                dynamicTextElement.textContent = currentText.slice(0, charIndex + 1);
+                charIndex++;
+                if (charIndex === currentText.length) {
+                    isDeleting = true;
+                    setTimeout(typeEffect, 2000);
+                    return;
+                }
+            } else {
+                dynamicTextElement.textContent = currentText.slice(0, charIndex);
+                charIndex--;
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % texts.length;
+                }
+            }
+            setTimeout(typeEffect, isDeleting ? deleteSpeed : typingSpeed);
+        }
+
+        window.onload = typeEffect;
+
+        const themeIcon = document.getElementById("themeIcon");
+        let isDarkMode = false;
+
+        themeIcon.addEventListener("click", function() {
+            if (!isDarkMode) {
+                document.body.classList.add("dark-mode");
+                themeIcon.classList.remove("fa-moon");
+                themeIcon.classList.add("fa-sun");
+                document.querySelectorAll('.header-text, .typing-text, .info-text, .social-media-title').forEach(el => {
+                    el.style.background = 'linear-gradient(270deg, #ff0080, #ff8c00, #00ff88, #00d4ff, #8c00ff)';
+                    el.style.webkitBackgroundClip = 'text';
+                    el.style.color = 'transparent';
+                });
+                isDarkMode = true;
+            } else {
+                document.body.classList.remove("dark-mode");
+                themeIcon.classList.remove("fa-sun");
+                themeIcon.classList.add("fa-moon");
+                document.querySelectorAll('.header-text, .typing-text, .info-text, .social-media-title').forEach(el => {
+                    el.style.color = '#ffffff';
+                    el.style.background = 'none';
+                });
+                isDarkMode = false;
+            }
+        });
+    </script>
+</body>
+</html>
